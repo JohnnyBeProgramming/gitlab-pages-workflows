@@ -1,5 +1,4 @@
 timeZone: Europe/Paris
-theme: github.com/zeon-studio/hugoplate
 
 paginate: 50
 summaryLength: 10
@@ -19,8 +18,6 @@ module:
   mounts:
     - source: assets
       target: assets
-    - source: hugo_stats.json
-      target: assets/watching/hugo_stats.json
 
 build:
   noJSConfigInAssets: false
@@ -28,10 +25,6 @@ build:
   buildStats:
     enable: true
   cachebusters:
-    - source: assets/watching/hugo_stats\.json
-      target: style\.css
-    - source: (postcss|tailwind)\.config\.js
-      target: css
     - source: assets/.*\.(js|ts|jsx|tsx)
       target: js
     - source: assets/.*\.(css|scss|sass)
@@ -40,51 +33,6 @@ build:
       target: css
     - source: assets/.*\.(.*)$
       target: $1
-
-outputs:
-  home:
-    - HTML
-    - RSS
-    - WebAppManifest
-    - SearchIndex
-
-imaging:
-  quality: 80
-  resampleFilter: Lanczos
-
-caches:
-  images:
-    dir: :resourceDir/_gen
-    maxAge: 720h
-  assets:
-    dir: :resourceDir/_gen
-    maxAge: 720h
-
-markup:
-  goldmark:
-    renderer:
-      unsafe: true
-  highlight:
-    style: monokai
-  tableOfContents:
-    startLevel: 2
-    endLevel: 5
-    ordered: true
-
-mediaTypes:
-  application/manifest+json:
-    suffixes:
-      - webmanifest
-
-outputFormats:
-  WebAppManifest:
-    mediaType: application/manifest+json
-    rel: manifest
-  SearchIndex:
-    mediaType: application/json
-    baseName: searchindex
-    isPlainText: true
-    notAlternative: true
 
 params:
   plugins:
