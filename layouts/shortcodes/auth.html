@@ -1,0 +1,8 @@
+{{ $action := .Get "action" }}
+{{ if (eq $action "logout") }}
+    <!-- Sign Out -->
+    {{ partial "user/logout" . }}
+{{ else }}
+    <!-- Sign In (if needed) -->
+    {{ partial "user/login" . }}
+{{ end }}

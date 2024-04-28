@@ -1,0 +1,9 @@
+<!--
+{{ $image:= .Params.image }}
+-->
+<!-- {{ if $image }} -->
+<div class="mb-10">
+  <!-- {{ $imgattr := dict "Src" $image "Alt" .Title "Class" "w-full rounded" }} -->
+  {{ partial "image" ($imgattr) }}
+</div>
+<!-- {{ end }} -->

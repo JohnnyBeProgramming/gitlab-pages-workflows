@@ -1,0 +1,22 @@
+<!-- 
+{{ $project_id := $.Site.Params.workflow.project_id }}
+{{ $base_url := $.Site.BaseURL }}
+-->
+<script
+  x-init="checkAuth($store.workflows, project_id)"
+  x-data="{ 
+    project_id: '{{ $project_id }}',
+  }"
+>
+  function checkAuth($workflows, project) {
+    if ($workflows.isReady(project)) return;
+
+    // Authentication is required
+    const loc = window.location
+    const ret = (new URLSearchParams(loc.search)).get('ret') || loc.href;
+    const ref = encodeURIComponent(ret);
+    const url = `{{ $base_url }}/user/login?project=${project}&ret=${ref}`;
+    console.debug("Login Required", url);
+    window.location.href = url;
+  }
+</script>

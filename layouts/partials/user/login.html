@@ -1,0 +1,122 @@
+<!-- 
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<div
+  x-init="$workflows = $store.workflows"
+  x-data="{
+    base_url: '{{ $.Site.BaseURL }}',
+    project_id: '{{ $project_id }}', 
+    config: $store.workflows.getConfig(),
+    ret: (new URLSearchParams(window.location.search)).get('ret') || '/',
+  }"
+>
+  <script>
+    async function connect(e, $workflows, ret) {
+      const project = e.target.querySelector('input[name="project"]').value;
+      const token = e.target.querySelector('input[name="token"]').value;
+
+      // Try and connect to the server with the given token
+      const res = await $workflows.connect(project, token);
+      if (!res) return;
+
+      // Refresh the page
+      console.debug("Connection established, redirecting...", ret);
+      window.location.href = ret;
+    }
+  </script>
+  <form @submit.prevent="await connect(event, $workflows, ret)">
+    <div x-show="$workflows.isReady(project_id)">
+      Already logged in...
+      <a
+        class="btn btn-outline-primary btn-sm hidden lg:inline-block"
+        x-data="{logout_url: base_url + 'user/logout?ret=' + encodeURIComponent(window.location.href)}"
+        x-show="$store.workflows.isReady(project_id)"
+        x-bind:href="logout_url"
+      >
+        Sign Out
+      </a>
+    </div>
+    <div x-show="!$workflows.isReady(project_id)">
+      <h3>Authentication Required</h3>
+      <div class="flex flex-col space-y-4">
+        <div>
+          <label for="project" class="block text-sm mb-2">
+            <strong>Default Project ID</strong>
+            <span class="group ml-2 text-gray-500">
+              <i
+                class="fa-solid fa-circle-info text-blue-500 cursor-pointer"
+              ></i>
+              <span class="hidden group-hover:inline-block">
+                <em>You can find your project's ID in: </em>
+                <strong class="ml-2">GitLab (top right)</strong>
+                <i class="fa-solid fa-arrow-right"></i>
+                <strong
+                  >[ <i class="fa-solid fa-ellipsis-vertical"></i> ]</strong
+                >
+                <i class="fa-solid fa-arrow-right"></i>
+                <strong>Copy Project ID</strong>
+              </span>
+            </span>
+          </label>
+          <input
+            type="text"
+            name="project"
+            placeholder="Select your Project ID"
+            autocomplete="off"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker text-gray-400"
+            :class="{ 'cursor-not-allowed': '{{$project_id}}' !== '' }"
+            x-bind:disabled="'{{$project_id}}' !== ''"
+            x-model="project_id"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label class="block text-sm mb-2" for="token">
+            <strong>Personal Access Token</strong>
+            <span class="group ml-2 text-gray-500">
+              <i
+                class="fa-solid fa-circle-info text-blue-500 cursor-pointer"
+              ></i>
+              <span class="hidden group-hover:inline-block">
+                <em
+                  ><a
+                    x-bind:href="config.apiURL + '/-/user_settings/personal_access_tokens'"
+                    target="_blank"
+                    >Click here</a
+                  >
+                  to create a new token, or:
+                </em>
+                <strong class="ml-2">GitLab Profile Icon (top left)</strong>
+                <i class="fa-solid fa-arrow-right"></i>
+                <strong>Preferenences</strong>
+                <i class="fa-solid fa-arrow-right"></i>
+                <strong>Access Tokens</strong>
+                <i class="fa-solid fa-arrow-right"></i>
+                <strong>Add new token</strong>
+              </span>
+            </span>
+          </label>
+          <input
+            name="token"
+            type="password"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3"
+            autocomplete="current-password"
+            placeholder="Enter Personal Access Token"
+            required
+          />
+        </div>
+        <div class="block md:flex items-center justify-between">
+          <div>
+            <button
+              type="submit"
+              class="p-2 border rounded btn btn-outline-primary"
+            >
+              Authenticate
+            </button>
+          </div>
+          <div class="mt-4 md:mt-0"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,42 @@
+# Declare the pipeline specifications in the header
+spec:
+  inputs:
+    DNS_SERVER:
+      default: "8.8.8.8"
+    DOMAIN:
+      default: www.google.com
+---
+# Define pipeline variables, jobs, and actions
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'web'
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH
+
+include:
+  - local: .gitlab/pages.yml
+  - local: .gitlab/tasks/*.yml
+
+variables:
+  DNS_SERVER:
+    description: "DNS server (IP) to use"
+    value: ""
+  DOMAIN:
+    description: "Target domain to probe"
+    value: www.google.com
+    options:
+      - www.google.com
+      - reddit.com
+
+stages:
+  - build
+  - test
+
+manual:
+  stage: build
+  rules:
+    - { if: $CI_PIPELINE_SOURCE == 'web', when: always }
+  script:
+    - echo "Please Note! You need to invoke a custom pipeline."
+    - echo " - To run one of the predefined actions, "

@@ -1,0 +1,14 @@
+<a
+  target="_blank"
+  x-bind:href="resp?.user.web_url"
+  class="inline-block no-underline"
+>
+  <img
+    x-show="resp?.user.avatar_url"
+    x-bind:alt="resp?.user.name"
+    x-bind:src="resp?.user.avatar_url"
+    class="h-3 w-5 rounded-full overflow-hidden shadow-md border"
+  />
+
+  <span class="font-bold" x-text="resp?.user.name">Checking...</span>
+</a>

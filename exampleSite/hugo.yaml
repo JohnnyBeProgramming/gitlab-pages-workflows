@@ -1,0 +1,37 @@
+title: Example Workflows
+baseURL: /
+theme: gitlab.com/JohnnyBeProgramming/my-custom-pipelines
+#theme: github.com/zeon-studio/hugoplate
+
+params:  
+  favicon: images/favicon.png
+  logo: images/logo.png
+  logo_darkmode: images/logo-darkmode.png
+  logo_width: 194px
+  logo_height: 32px
+  logo_text: Workflows
+
+  # Setup GitLab project for triggering pipelines
+  workflow:
+    apiURL: https://gitlab.com/
+    project_id: '56547146'
+    environments:
+      main: Production
+      develop: Development
+
+  # Enable the search indexing
+  search:
+    enable: true
+    primary_color: "#121212"
+    include_sections:
+      - about
+      - workflows
+    show_image: false
+    show_description: true
+    show_tags: true
+    show_categories: true
+
+
+  copyright: Developed & maintained by [JohnnyBeProgramming](https://gitlab.com/JohnnyBeProgramming)
+
+

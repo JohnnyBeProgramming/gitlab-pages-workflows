@@ -1,0 +1,15 @@
+name: my-custom-pipelines
+license: MIT
+licenselink: https://gitlab.com/JohnnyBeProgramming/my-custom-pipelines/blob/master/LICENSE.md
+description: A fast, minimalist and responsive hugo theme.
+homepage: https://gitlab.com/JohnnyBeProgramming/my-custom-pipelines
+tags:
+  - pages
+features:
+  - responsive
+  - categories
+  - tags
+min_version: 0.75.0
+author:
+  name: JohnnyBeProgramming
+  homepage: https://gitlab.com/JohnnyBeProgramming

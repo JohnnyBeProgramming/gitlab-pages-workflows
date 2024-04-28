@@ -1,0 +1,36 @@
+<!--
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<section
+  class="section pt-7"
+  x-data="{
+    branch: (new URLSearchParams(window.location.search)).get('branch'),
+  }"
+>
+  <div class="container">
+    <div class="row justify-center">
+      <article class="lg:col-10">
+        <!-- Image banner (if set) -->
+        {{ partial "workflow/details/image-banner" . }}
+
+        <h1 class="h2 mb-4">{{ .Title }}</h1>
+
+        <!-- Workflow Toolbar -->
+        {{ partial "workflow/toolbar" . }}
+
+        <!-- Main contents -->
+        <div class="content mb-10 dark:text-gray-100">{{ .Content }}</div>
+
+        <div class="row items-start justify-between">
+          <div class="lg:col-8 flex items-center lg:mb-0 truncate">
+            {{ partial "workflow/tags" . }}
+          </div>
+
+          <div class="lg:col-4 flex items-center content-end truncate">
+            {{ partial "workflow/categories" . }}
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

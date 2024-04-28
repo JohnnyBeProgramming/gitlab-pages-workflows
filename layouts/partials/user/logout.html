@@ -1,0 +1,27 @@
+<!-- 
+{{ $project_id := $.Site.Params.workflow.project_id }}
+{{ $base_url := $.Site.BaseURL }}
+-->
+<script>
+  async function logout($workflows, project, ret) {
+    if ($workflows.isReady(project)) {
+      const res = await $workflows.disconnect(project);
+      if (!res) return; // Something went wrong
+    }
+
+    if (ret) {
+      // Refresh the page
+      console.debug("Redirecting to", ret);
+      window.location.href = ret;
+    }
+  }
+</script>
+<form
+  x-init="logout($store.workflows, '{{ $project_id }}', ret)"
+  x-data="{
+    ret: '{{ $base_url }}user/login?ret=' + encodeURIComponent((new URLSearchParams(window.location.search)).get('ret') || ''),
+  }"
+>
+  <h3>Signing out...</h3>
+  <em> Redirecting to <a href="#" x-text="ret" x-bind:href="ret"></a>... </em>
+</form>

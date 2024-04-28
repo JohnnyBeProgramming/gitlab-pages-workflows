@@ -1,0 +1,20 @@
+<!-- 
+{{ $project_id := .Get "project" | default $.Site.Params.workflow.project_id }}
+{{ $id := .Get "id" }}
+-->
+<div
+  x-data="{
+    project_id: '{{ $project_id }}',
+    pipeline_id: '{{ $id }}' || (new URLSearchParams(window.location.search)).get('id'),
+  }"
+>
+  <!-- List all pipelines -->
+  <template x-if="!pipeline_id">
+    <div>{{ partial "pipelines/list" . }}</div>
+  </template>
+
+  <!-- Show specific pipeline details -->
+  <template x-if="pipeline_id">
+    <div>{{ partial "pipelines/details" . }}</div>
+  </template>
+</div>

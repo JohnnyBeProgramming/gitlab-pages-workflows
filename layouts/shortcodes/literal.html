@@ -1,0 +1,4 @@
+{{ $text := .Get "text" | default .Inner }}
+{{- if $text -}}
+    {{ $text }}
+{{- end -}}

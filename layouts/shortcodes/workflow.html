@@ -1,0 +1,45 @@
+<!-- 
+{{ $base_url := .Site.BaseURL  }}
+
+{{ $debug := .Get "debug" | default false }}
+{{ $form_id := .Get "form" | default "main" }}
+{{ $project_id := .Get "project" | default $.Site.Params.workflow.project_id }}
+{{ $job_to_run := .Get "target" | default (index .Page.Params "forms" $form_id "target") | default $form_id }}
+
+{{ $form := index .Page.Params "forms" $form_id }}
+{{ if and (not $form) $form_id }}
+  {{ $form = index $.Site.Data.forms $form_id }}
+{{ end }}
+
+-->
+{{ partial "user/required" . }}
+
+<form
+  id="form-{{ $form_id }}"
+  class="workflow relative max-w-7xl"
+  x-data="useWorkflow('{{ $project_id }}', '{{ $job_to_run }}', {{ $debug }})"
+  x-init="$form = $el"
+  @submit="newPipeline"
+>
+  <!-- {{ with .Inner }} -->
+  <!-- Use the user-provided content section -->
+  <div>{{ . }}</div>
+  <!-- {{ else }} -->
+  <!-- Use the provided schema(s) to render a form -->
+  <div x-init="$nextTick(() => initForm($el, {{ $form | jsonify }}))"></div>
+  <!-- {{ end }} -->
+
+  <!-- Show warning when form not ready -->
+  <template x-if="!branch || !isReady()">
+    {{ partial "workflow/not-ready" . }}
+  </template>
+
+  <template x-if="hasFooter">
+    <div class="form-controls flex">
+      <div x-show="debug">{{ partial "workflow/controls/debug" . }}</div>
+      <div class="flex-1">{{ partial "workflow/controls/default" . }}</div>
+    </div>
+  </template>
+
+  {{ partial "workflow/details/debug" . }}
+</form>

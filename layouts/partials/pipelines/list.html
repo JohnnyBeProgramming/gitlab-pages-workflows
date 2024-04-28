@@ -1,0 +1,91 @@
+<!-- 
+{{ $project_id := .Get "project" | default $.Site.Params.workflow.project_id }}
+-->
+{{ partial "user/required" . }}
+<script>
+  async function pipelineHistory($workflows, project_id) {
+    const config = $workflows.getConfig();
+    const action =
+      config?.apiURL + "/api/v4/projects/" + project_id + "/jobs/";
+    const res = await $workflows.apiRequest("GET", action);
+    return res;
+  }
+</script>
+<div
+  x-init="$workflows = $store.workflows"
+  x-data="{
+    project_id: '{{ $project_id }}', 
+    config: $store.workflows.getConfig(),
+  }"
+>
+  <form
+    @submit.prevent="history = await pipelineHistory($workflows, project_id)"
+    x-init="history = await pipelineHistory($workflows, project_id)"
+    x-show="$workflows.isReady(project_id)"
+    x-data="{
+      history: [],
+    }"
+  >
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th colspan="6">
+            <div>
+              <label for="ref">Branch Name</label>
+              <select name="ref">
+                <option>main</option>
+                <option>develop</option>
+              </select>
+              <button type="submit" class="border p-2">List all Jobs</button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <thead>
+        <tr>
+          <th class="text-center w-20">Status</th>
+          <th class="text-left w-20">Changed</th>
+          <th class="text-left">Branch</th>
+          <th class="text-left w-30 truncate">Stage</th>
+          <th class="text-left">Job Name</th>
+          <th class="text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in history">
+          <tr>
+            <td class="text-center" x-init="
+              info = item.pipeline;
+              quick_link = item?.pipeline && '{{ .Site.BaseURL }}pipelines/?id=' + item.pipeline.id;
+            ">
+              {{ partial "pipelines/status" . }}
+            </td>
+            <td>
+              <a
+                x-text="item.commit.short_id"
+                x-bind:href="item.commit.web_url"
+                x-bind:target="'_blank'"
+                >...</a
+              >
+            </td>
+            <td>
+              <i class="fa-solid fa-code-branch"></i>
+              <a
+                x-bind:href="item.web_url.split('/-/')[0] + '/-/tree/' + item.ref"
+                x-bind:target="'_blank'"
+                x-init="info = item.pipeline"
+              >
+                <span class="font-bold" x-text="item.ref"></span>
+              </a>
+            </td>
+            <td x-text="item.stage"></td>
+            <td x-text="item.name"><em>loading...</em></td>
+            <td
+              x-text="!item.created_at ? '' : (new Date(item.created_at)).toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })"
+            ></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </form>
+</div>

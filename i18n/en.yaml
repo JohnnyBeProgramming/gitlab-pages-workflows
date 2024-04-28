@@ -1,0 +1,41 @@
+- id: home
+  translation: Home
+
+- id: read_more
+  translation: Read More
+
+- id: send
+  translation: Send
+
+- id: related_posts
+  translation: Related Workflows
+
+- id: workflows
+  translation: Workflows
+
+- id: start_workflow
+  translation: Start new workflow
+
+- id: tags
+  translation: Tags
+
+- id: categories
+  translation: Workflows
+
+- id: related_workflows
+  translation: Related Workflows
+
+- id: toc
+  translation: Table of Contents
+
+- id: share
+  translation: Share
+
+- id: search_input_placeholder
+  translation: Search Workflows ...
+
+- id: no_results_for
+  translation: No results for
+
+- id: empty_search_results_placeholder
+  translation: Type something to search..

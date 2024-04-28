@@ -1,0 +1,199 @@
+<!--
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<script>
+  async function fetchTriggerTokens(project_id, $workflows) {
+    const config = $workflows.getConfig();
+    const token = config?.token;
+    if (!token) return null;
+
+    const req_url = `${config.apiURL}/api/v4/projects/${project_id}/triggers`;
+    const headers = { "PRIVATE-TOKEN": token };
+    const resp = await fetch(req_url, { headers })
+      .then((res) => $workflows.jsonResponse(res))
+      .catch((err) => console.error(err));
+
+    return resp;
+  }
+
+  async function createTrigger($workflows, project_id, desc) {
+    const config = $workflows.getConfig();
+    const token = config?.token;
+    if (!token) return null;
+    if (!desc) return null;    
+
+    const req_url = `${config.apiURL}/api/v4/projects/${project_id}/triggers`;
+    const method = "POST";
+    const headers = {
+      "PRIVATE-TOKEN": token,
+      "Content-Type": "application/json",
+    };
+    const body = JSON.stringify({ description: desc });
+    const resp = await fetch(req_url, { method, headers, body })
+      .then((res) => $workflows.jsonResponse(res))
+      .catch((err) => console.error(err));
+
+    if (resp) {
+      // Select the current trigger token as the active one
+      $workflows.setTrigger(resp);
+    } else {
+      console.warn("Trigger token could not be created");
+    }
+
+    return resp;
+  }
+
+  async function deleteTrigger($workflows, event, project_id, item) {
+    const msg = `You are about to remove the '${item?.description}' trigger token.\nAre you sure you want to continue?`;
+    const cancel = () => false;
+    if (!confirm(msg)) return cancel();
+
+    const config = $workflows.getConfig();
+    const token = config?.token;
+    if (!token) return cancel();
+    if (!item) return cancel();
+
+    const req_url = `${config.apiURL}/api/v4/projects/${project_id}/triggers/${item.id}`;
+    const method = "DELETE";
+    const headers = { "PRIVATE-TOKEN": token };
+    try {
+      await fetch(req_url, { method, headers })
+        .then((res) => $workflows.checkResponse(res))
+        .catch((err) => console.error(err));
+      return true;
+    } catch (ex) {
+      const err_msg = `Failed to delete the trigger token with id: ${project_id}`;
+      alert(err_msg);
+      return cancel();
+    }
+  }
+
+  function filterTriggerTokens(target, terms) {
+    const items = target.querySelectorAll(".filtered");
+    const searchTerm = terms.toLowerCase();
+    items.forEach((item) => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+</script>
+<div
+  x-init="
+    $workflows = $store.workflows;
+    tokens = await fetchTriggerTokens('{{ $project_id }}', $workflows);
+    token = await $store.workflows.getTrigger('{{ $project_id }}');
+
+    if (!token && tokens?.length > 0) {
+      token = await $workflows.setTrigger(project_id, tokens[0])
+    }
+  "
+  x-data="{
+    open: false,
+    project_id: '{{ $project_id }}',
+    token: null,
+    tokens: []
+  }"
+>
+  <!-- Branch icon -->
+  <i
+    class="fa-solid mr-1"
+    :class="{ 
+      'fa-unlock': token,
+      'fa-lock': !token,
+    }"
+    @click="open = !open; open && $nextTick(() => { document.querySelector('#token-filter').focus(); });"
+  ></i>
+
+  <!-- Branch dropdown parent -->
+  <div class="relative group inline-block">
+    <!-- Current value -->
+    <button
+      x-show="!open"
+      class="inline-flex justify-center w-full"
+      @click="open = !open; open && $nextTick(() => { document.querySelector('#token-filter').focus(); });"
+    >
+      <span x-show="!token" class="text-gray-500 opacity-50 italic">
+        Select Token
+      </span>
+
+      <span x-show="token" x-text="token?.description" class="text-bold"></span>
+
+      {{ partial "icons/chevron-sm.svg" . }}
+    </button>
+
+    <!-- Search input -->
+    <input
+      id="token-filter"
+      type="text"
+      autocomplete="off"
+      placeholder="Select Token"
+      class="block w-60 px-2 py-1 -my-1 text-gray-800 border rounded-md border-gray-300 focus:outline-none"
+      x-on:input.debounce="filterTriggerTokens(document.querySelector('#token-dropdown'), $el.value)"
+      x-show="open"
+      style="display: none"
+    />
+
+    <!-- Dropdown content goes here -->
+    <div
+      id="token-dropdown"
+      class="w-60 absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1"
+      @click.outside="open = false"
+      x-show="open"
+      style="display: none; z-index: 20;"
+    >
+      <template x-for="item in tokens">
+        <div
+          @click="token = await $workflows.setTrigger(project_id, item); open = false;"
+          class="filtered block truncate text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+          :class="{ 
+            'font-bold': item.description === token?.description,
+            'opacity-50': item.description !== token?.description,
+          }"
+        >
+          <div class="flex items-center">
+            <i class="px-2 py-2 flex-0 fa-solid fa-key"></i>
+            <span class="py-2 flex-1 truncate" x-text="item.description"></span>
+            <a
+              class="px-2 py-2 flex-0 opacity-25 hover:opacity-75"
+              @click.stop="
+                let success = await deleteTrigger($workflows, event, project_id, item);                
+                if (success) {
+                  $nextTick(async () => { 
+                    if (token && token.id === item.id) {
+                      token = null;
+                    }
+                    tokens = await fetchTriggerTokens('{{ $project_id }}', $workflows);
+                    open = false;
+                  });
+                }    
+              "
+            >
+              <i class="fa-solid fa-trash"></i>
+            </a>
+          </div>
+        </div>
+      </template>
+      <hr x-show="tokens.length" />
+      <a
+        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+        @click="
+          let desc = prompt('Choose a unique identifier for this token', 'Pipeline Token');
+          if (tokens?.filter(t => t.description === desc).length) {
+            alert(`Trigger with description '${desc}' already exists.`);
+          } else {
+            token = await createTrigger($workflows, project_id, desc) || token;
+            tokens = await fetchTriggerTokens('{{ $project_id }}', $workflows);
+            $nextTick(() => { open = false });
+          }
+        "
+      >
+        <i class="fa-solid fa-plus mr-1"></i>
+        <span>Create Token</span>
+      </a>
+    </div>
+  </div>
+</div>

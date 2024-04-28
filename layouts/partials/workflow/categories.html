@@ -1,0 +1,16 @@
+<!-- {{ $categories:= .Params.categories }} -->
+<!-- {{ if $categories }} -->
+<h5 class="mr-3">{{ i18n "categories" }}:</h5>
+<ul>
+  <!-- {{ range $i,$p:= $categories }} -->
+  <li class="inline-block">
+    <a
+      class="bg-theme-light hover:bg-primary dark:bg-darkmode-theme-light dark:hover:bg-darkmode-primary dark:hover:text-dark m-1 block rounded px-3 py-1 hover:text-white"
+      href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}/"
+    >
+      {{ . | humanize }}
+    </a>
+  </li>
+  <!-- {{ end }} -->
+</ul>
+<!-- {{ end }} -->

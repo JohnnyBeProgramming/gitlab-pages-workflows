@@ -1,0 +1,20 @@
+<div
+  x-data="{
+    items: {
+        data: 'Variables',
+        schema: 'Data Schema',
+        uischema: 'UI SChema',
+    }
+  }"
+>
+  <template x-for="key in Object.keys(items)">
+    <button
+      type="button"
+      class="btn border-0 text-gray-500 hover:text-black"
+      :class="{'bg-gray-300': view === key}"
+      @click="view = view === key ? null : key"
+    >
+      <span x-text="items[key]" class="text-gray-500"></span>
+    </button>
+  </template>
+</div>

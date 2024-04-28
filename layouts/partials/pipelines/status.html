@@ -1,0 +1,23 @@
+<a
+  x-data="{
+    config: $store.workflows.getConfig(),
+  }"
+  class="center relative inline-block select-none whitespace-nowrap rounded-lg py-1.5 px-3 align-baseline font-sans text-xs leading-none no-underline bg-opacity-50"
+  :class="{
+    'bg-orange-500': info?.status == 'pending',
+    'bg-blue-500': info?.status == 'created',
+    'bg-blue-500': info?.status == 'running',
+    'bg-gray-500': info?.status == 'canceled',
+    'bg-green-500': info?.status == 'success',
+    'bg-red-500': info?.status == 'failed',
+  }"
+  x-bind:href="quick_link || info?.web_url"
+  x-bind:target="quick_link ? '_self' : '_blank'"  
+>
+  <!-- Silly hack to get tailwind to apply dynamic styles -->
+  <i
+    class="hidden bg-gray-500 bg-blue-500 bg-green-500 bg-red-500 bg-orange-500"
+  ></i>
+
+  <div class="mt-px font-bold" x-text="info?.status">Checking...</div>
+</a>

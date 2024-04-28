@@ -1,0 +1,52 @@
+<div
+  x-data="{
+    config: $store.workflows.getConfig(),    
+    resp: null,
+  }"
+  x-init="
+    $workflows = $store.workflows;
+    resp = await $workflows.fetchPipelineInfo(project_id, pipeline_id);
+  "
+  class="p-4 rounded shadow-md"
+>
+  <h2
+    class="text-xl mb-4 tracking-wider font-lighter text-gray-900 dark:text-gray-200"
+  >
+    Pipeline Details
+  </h2>
+  <div class="flex space-x-2 items-center">
+    <label class="font-bold">Branch:</label>
+    <div class="">
+      <i class="fa-solid fa-code-branch"></i>
+      <span class="font-bold" x-text="resp?.ref"></span>
+    </div>
+  </div>
+
+  <div class="flex space-x-2 items-center">
+    <label class="font-bold">Status:</label>
+    <div>{{ partial "workflow/details/status" . }}</div>
+    <i class="fa-solid fa-arrow-right"></i>
+    <a x-bind:href="resp?.web_url" target="_blank">View Pipeline</a>
+  </div>
+
+  <div class="flex space-x-2 items-center">
+    <label class="font-bold">Started by</label>
+    <div class="">{{ partial "workflow/details/user" . }}</div>
+  </div>
+
+  <hr />
+  <button
+    class="btn btn-outline-primary"
+    @click="resp = null; pipeline_id = null;"
+  >
+    Back
+  </button>
+  <button
+    class="btn btn-outline-primary"
+    @click="resp = !resp?.id ? resp : await $workflows.fetchPipelineInfo(project_id, resp?.id)"
+  >
+    Refresh
+  </button>
+  <hr />
+  <pre x-text="JSON.stringify(resp, null, 2)" class="text-gray-500"></pre>
+</div>

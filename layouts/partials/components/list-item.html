@@ -1,0 +1,22 @@
+<!-- 
+{{ $categories:= .Params.categories }} 
+-->
+<div class="flex space-x-2 p-3">
+  <!-- Icon -->
+  <div class="flex-0 px-2">
+    <i class="fa-solid fa-file"></i>
+  </div>
+
+  <!-- Title -->
+  <div class="w-60 flex-0 font-bold truncate">
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  </div>
+
+  <!-- Summarry -->
+  <p class="flex-1 truncate text-gray-500 text-opacity-50 italic">{{ .Summary }}</p>
+  
+  <a class="px-2" href="{{ .RelPermalink }}">
+    <i class="fa-solid fa-play"></i>
+  </a>
+
+</div>

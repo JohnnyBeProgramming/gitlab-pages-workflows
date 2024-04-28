@@ -1,0 +1,16 @@
+<!--
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<ul class="mb-4">
+  <!-- {{ if $project_id }} -->
+  <li class="inline-block mr-2">{{ partial "workflow/toolbar/project" . }}</li>
+  <!-- {{ end }} -->
+
+  <!-- Select Branch -->
+  <li class="mr-4 inline-block">{{ partial "workflow/toolbar/branch" . }}</li>
+  <!-- End Branch Selection -->
+
+  <!-- Select Trigger Token -->
+  <li class="mr-4 inline-block">{{ partial "workflow/toolbar/token" . }}</li>
+  <!-- End Branch Selection -->
+</ul>

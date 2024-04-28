@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "title": "Variables",
+  "required": ["DNS_TARGET"],
+  "properties": {
+    "DNS_SERVER": {
+      "title": "DNS Server IP",
+      "type": "string",
+      "default": "8.8.8.8"
+    },
+    "DNS_TARGET": {
+      "title": "Target Domain",
+      "type": "string"
+    },
+    "DNS_TEST_LB": {
+      "title": "Test Load Balancers",
+      "type": "boolean",
+      "default": false
+    },
+    "WEB_URL": {
+      "title": "Probe Web URL",
+      "type": "string"
+    },
+    "LIMIT": {
+      "title": "Probe Count",
+      "type": "integer",
+      "maximum": 50
+    }
+  }
+}

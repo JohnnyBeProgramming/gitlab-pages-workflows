@@ -1,0 +1,20 @@
+baseURL: /
+title: My Custom Pipelines
+theme: github.com/zeon-studio/hugoplate
+params:
+  workflow:
+    project_id: '56547146'
+    environments:
+      main: Production
+      develop: Development
+      test: Testing
+
+  favicon: images/favicon.png
+  logo: images/logo.png
+  logo_darkmode: images/logo-darkmode.png
+  logo_width: 160px
+  logo_height: 32px
+  logo_webp: true
+  logo_text: My Pipelines
+
+  copyright: Designed & Developed by [Zeon Studio](https://zeon.studio)

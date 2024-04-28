@@ -1,0 +1,26 @@
+<!-- 
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<span
+  class="mx-2"
+  x-data="{
+    project_id: '{{ $project_id }}',
+    login_url: '{{ $.Site.BaseURL }}user/login?ret=' + encodeURIComponent(window.location.href),
+    logout_url: '{{ $.Site.BaseURL }}user/logout?ret=' + encodeURIComponent(window.location.href)
+  }"
+>
+  <a
+    class="btn btn-outline-primary btn-sm hidden lg:inline-block"
+    x-show="!$store.workflows.isReady(project_id)"
+    x-bind:href="login_url"
+  >
+    User Login
+  </a>
+  <a
+    class="btn btn-outline-primary btn-sm hidden lg:inline-block"
+    x-show="$store.workflows.isReady(project_id)"
+    x-bind:href="logout_url"
+  >
+    Sign Out
+  </a>
+</span>

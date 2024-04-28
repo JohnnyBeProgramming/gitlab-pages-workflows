@@ -1,0 +1,13 @@
+<button
+  type="reset"
+  x-init="message = 'Are you sure? All changes will be lost!'"
+  @click="confirm(message) && generateForm(container, schema, uischema, data)"
+>
+  <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+  <span>Reset</span>
+</button>
+
+<button type="submit" x-bind:disabled="isValid()">
+  <i class="fa-solid fa-play mr-2"></i>
+  <span>Start Workflow</span>
+</button>

@@ -1,0 +1,51 @@
+<a
+  x-init="$workflows = $store.workflows;"
+  x-data="{
+    config: $store.workflows.getConfig(),
+  }"
+  class="center relative inline-block select-none whitespace-nowrap rounded-lg py-2 px-3.5 align-baseline font-sans text-xs leading-none no-underline hover:underline"
+  :class="{
+    'text-white bg-blue-600': resp?.status == 'created',
+    'text-white bg-blue-600': resp?.status == 'running',
+    'text-white bg-gray-600': resp?.status == 'canceled',
+    'text-white bg-green-600': resp?.status == 'success',
+    'text-white bg-red-600': resp?.status == 'failed',
+  }"
+  x-bind:href="!resp ? '' : config.apiURL + resp.detailed_status.details_path"
+  target="_blank"
+>
+  <i class="hidden bg-gray-600 bg-blue-600 bg-green-600 bg-red-600"></i>
+  <div class="absolute top-1 left-1 h-5 w-5 -translate-y-6">
+    <img
+      x-bind:alt="resp?.detailed_status.tooltip"
+      x-bind:src="!resp ? '' : config.apiURL + resp.detailed_status.favicon"
+      class="relative inline-block h-5 w-5 translate-x-px translate-y-px rounded-full object-cover object-center"
+    />
+  </div>
+
+  <div class="pl-5 mr-5 mt-px font-bold" x-text="resp?.detailed_status.text">
+    Checking...
+  </div>
+
+  <div
+    x-show="!resp?.finished_at"
+    class="absolute top-1 right-1 mx-px mt-[0.5px] w-max rounded-lg bg-gray-500 hover:bg-red-500 transition-colors opacity-25 hover:opacity-75"
+    @click.prevent="resp = resp ? await $store.workflows.cancelPipeline(project_id, resp.id) : null"
+  >
+    <div role="button" class="h-5 w-5 p-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="3"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,71 @@
+theme_switcher: true
+theme_default: system
+
+navbar_fixed: true
+navigation_button:
+  enable: true
+  label: Start Workflow
+  link: workflows
+
+mainSections:
+  - workflows
+
+contact_form_action: "#"
+
+google_tag_manager: ""
+google_adsense: ""
+custom_script: ""
+preloader:
+  enable: false
+  preloader: ""
+
+search:
+  enable: true
+  primary_color: "#121212"
+  include_sections:
+    - about
+    - workflows
+  show_image: true
+  show_description: true
+  show_tags: true
+  show_categories: true
+
+metadata:
+  keywords:
+    - Boilerplate
+    - Hugo
+  description: Hugo & Tailwindcss Starter
+  author: zeon.studio
+  image: images/og-image.png
+
+site_verification:
+  google: ""
+  bing: ""
+  baidu: ""
+  facebook: ""
+  mastodon: ""
+
+cookies:
+  enable: false
+  expire_days: 60
+  content:
+    This site uses cookies. By continuing to use this website, you agree to
+    their use.
+  button: I Accept
+  
+widgets:
+  sidebar:
+    - categories
+    - tags
+    
+google_map:
+  enable: false
+  #map_api_key: AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU
+  #map_latitude: "51.5223477"
+  #map_longitude: "-0.1622023"
+  #map_marker: images/marker.png
+
+subscription:
+  enable: false
+  #mailchimp_form_action: https://gmail.us4.list-manage.com/subscribe/post?u=463ee871f45d2d93748e77cad&amp;id=a0a2c6d074
+  #mailchimp_form_name: b_463ee871f45d2d93748e77cad_a0a2c6d074

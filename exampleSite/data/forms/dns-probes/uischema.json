@@ -1,0 +1,58 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Group",
+      "elements": [
+        {
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/DNS_TARGET",
+              "options": {
+                "multi": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/DNS_SERVER"
+            }
+          ]
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/DNS_TEST_LB",
+          "label": "Check Load Balancer Info",
+          "options": {
+            "toggle": true
+          }
+        }
+      ],
+      "label": "DNS Target Environment"
+    },
+    {
+      "type": "Group",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/WEB_URL"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/LIMIT"
+        }
+      ],
+      "label": "",
+      "rule": {
+        "effect": "SHOW",
+        "condition": {
+          "scope": "#/properties/DNS_TEST_LB",
+          "schema": {
+            "const": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+<!-- 
+{{ $image:= .Params.image }}
+-->
+<div class="bg-body dark:bg-darkmode-body">
+  <!-- {{ if $image }} -->
+  <!-- {{ $imgAttrs := dict "Src" $image "Alt" .Title "Class" "mb-6 w-full rounded" }} -->
+  {{ partial "image" $imgAttrs }}
+  <!-- {{ end }} -->
+
+  <h4 class="mb-3">
+    <a href="{{ .RelPermalink }}"> {{ .Title }} </a>
+  </h4>
+
+  <ul class="mb-4 truncate">
+    <!-- {{ $categories:= .Params.categories }} -->
+    <!-- {{ if $categories }} -->    
+    <li class="mr-4 inline-block">
+      <i class="fa-regular fa-folder mr-1"></i>
+      <!-- {{ range $i,$p:= $categories }} -->
+      <a
+        href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}/"
+        class="ms-1"
+      >
+        {{ . | humanize }} {{ if ne $i (sub (len $categories) 1) }}{{ "," }}{{
+        end }}
+      </a>
+      <!-- {{ end }} -->
+    </li>
+    <!-- {{ end }} -->
+
+    <!-- {{ $tags:= .Params.tags }} -->
+    <!-- {{ if $tags }} -->    
+    <li class="mr-4 inline-block">
+      <i class="fa-regular fa-tags mr-1"></i>
+      <!-- {{ range $i,$p:= $tags }} -->
+      <a
+        href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/"
+        class="ms-1"
+      >
+        {{ . | humanize }} {{ if ne $i (sub (len $tags) 1) }}{{ "," }}{{
+        end }}
+      </a>
+      <!-- {{ end }} -->
+    </li>
+    <!-- {{ end }} -->
+    
+  </ul>
+
+  <p class="mb-6">{{ .Summary }}</p>
+
+  <a class="btn btn-outline-primary btn-sm" href="{{ .RelPermalink }}">
+    <i class="fa-solid fa-play mr-2"></i>
+    <span>{{ i18n "start_workflow" }}</span>
+  </a>
+</div>

@@ -1,0 +1,64 @@
+# ------------------------------------------------------------
+# This project is powered by: https://taskfile.dev
+# ------------------------------------------------------------
+version: 3
+vars:
+  DOMAIN: '{{ .DOMAIN | default "www.google.com" }}'
+tasks:
+
+  init: 
+    desc: Initialise the required resources
+    cmds:
+      - npm install
+
+  start:
+    desc: Start in development mode
+    deps: [init]
+    cmds:
+      - hugo server
+  start:parent:
+    desc: Start parent in development mode
+    deps: [init]
+    cmds:
+      - hugo -d ../public --config ../hugo.yaml server
+
+  build:
+    desc: Build the static site
+    cmds:
+      - hugo
+  build:parent:
+    desc: Build the parent as a static hugo site
+    cmds:
+      - hugo -d ../public --config ../hugo.yaml
+
+  clean: 
+    desc: Clean all untracked data (including files added, but not comitted to git)
+    cmds:
+      - git clean -fdX
+
+
+  default:
+    desc: Default action that is triggered
+    cmds:
+      - task: check-dns-info
+      - task: check-load-balancers
+
+  check-dns-info:
+    desc: Takes a target domain as input and reports all known information using a DNS tool called dig
+    vars:
+      DNS_SERVER: '{{ .DNS_SERVER | default "" }}'
+    cmds:
+      - |-
+        chmod +x ./scripts/checks/dns/info
+        ./scripts/checks/dns/info {{ .DOMAIN }}
+
+  check-load-balancers:
+    desc: Given a target URL, we send a number of probes and check which nameserver responds with a reply.
+    vars:
+      WEB_URL: '{{ .CLI_ARGS | default (printf "https://%s" .DOMAIN) }}'
+      LIMIT: 50
+    cmds:
+      - |-
+        chmod +x ./scripts/checks/dns/benchmark-lb
+        ./scripts/checks/dns/benchmark-lb {{ .WEB_URL }}
+

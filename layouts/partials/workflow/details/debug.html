@@ -1,0 +1,17 @@
+<div class="mx-8 -mt-8 text-sm" x-show="view">
+  <pre
+    class="highlight text-gray-500"
+    x-show="view === 'data'"
+    x-text="JSON.stringify(variables, null, 2) || 'no data'"
+  ></pre>
+  <pre
+    class="highlight text-gray-500"
+    x-show="view === 'schema'"
+    x-text="JSON.stringify(schema, null, 2) || 'no data'"
+  ></pre>
+  <pre
+    class="highlight text-gray-500"
+    x-show="view === 'uischema'"
+    x-text="JSON.stringify(uischema, null, 2) || 'no data'"
+  ></pre>
+</div>

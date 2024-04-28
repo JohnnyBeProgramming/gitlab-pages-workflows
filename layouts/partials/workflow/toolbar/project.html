@@ -1,0 +1,17 @@
+<!--
+{{ $project_id := $.Site.Params.workflow.project_id }}
+-->
+<div
+  class="group"
+  x-init="project = $store.workflows.getProject('{{ $project_id }}')"
+  x-show="project"
+  x-data="{
+    project: null,
+  }"
+>
+  <i class="fa-solid fa-folder-open mr-1"></i>
+  <a x-bind:href="project.web_url + '/-/pipelines/new'" target="_blank">
+    <span x-text="project.name_with_namespace"></span>
+    <i class="text-xs fa-solid fa-arrow-up-right-from-square opacity-25 mr-2"></i>
+  </a>
+</div>

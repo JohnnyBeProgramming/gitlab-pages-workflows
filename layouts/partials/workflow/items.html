@@ -1,0 +1,78 @@
+<!-- 
+{{ $paginator:= .Paginate .RegularPages }} 
+-->
+<script>
+  function filterWorkflows(target, terms) {
+    const items = target.querySelectorAll(".can-search");
+    const searchTerm = terms.toLowerCase();
+    items.forEach((item) => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+</script>
+<div x-data="{ layout: localStorage.getItem('workflow.layout') || 'list' }">
+  <div class="flex flex-0 mb-6">
+    <div class="w-80 -ml-4 -my-2">
+      <label for="search" class="sr-only">Search</label>
+      <div class="relative w-full">
+        <div
+          class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+        >
+          {{ partial "icons/search.svg" . }}
+        </div>
+        <input
+          type="text"
+          id="voice-search"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search by keywords..."
+          x-on:input.debounce="filterWorkflows(document.querySelector('#workflow-items'), $el.value)"
+        />
+      </div>
+    </div>
+    <div class="flex-1 -my-2">{{ partial "components/pagination.html" . }}</div>
+    <div class="flex-0 mr-2">
+      <a
+        title="Grid Layout"
+        @click="layout = 'grid'; localStorage.setItem('workflow.layout', layout)"
+        class="cursor-pointer text-dark hover:bg-theme-light dark:text-darkmode-dark dark:hover:bg-darkmode-theme-light rounded p-2"
+        ><i class="fa-solid fa-table-cells-large"></i
+      ></a>
+
+      <a
+        title="List Layout"
+        @click="layout = 'list'; localStorage.setItem('workflow.layout', layout)"
+        class="cursor-pointer text-dark hover:bg-theme-light dark:text-darkmode-dark dark:hover:bg-darkmode-theme-light rounded p-2"
+        ><i class="fa-solid fa-list"></i
+      ></a>
+    </div>
+  </div>
+
+  <div id="workflow-items">
+    <div x-show="layout == 'grid'" style="display: none" class="row mt-8">
+      <!-- {{ range $paginator.Pages }} -->
+      <div class="can-search able md:col-6 mb-14 p-4 rounded overflow-hidden shadow-md">
+        {{ partial "components/card-item" . }}
+      </div>
+      <!-- {{ end }} -->
+    </div>
+
+    <div x-show="layout == 'list'" style="display: none" class="row">
+      <ul
+        class="border border-gray-200 dark:border-gray-700 rounded overflow-hidden shadow-md px-0"
+      >
+        <!-- {{ range $paginator.Pages }} -->
+        <li
+          class="can-search hover:bg-gray-100 hover:text-gray-900 border-b border-gray-300 dark:border-gray-700 last:border-none border-gray-200 transition-all duration-300 ease-in-out"
+        >
+          {{ partial "components/list-item" . }}
+        </li>
+        <!-- {{ end }} -->
+      </ul>
+    </div>
+  </div>
+</div>

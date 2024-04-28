@@ -1,0 +1,128 @@
+<!--
+{{ $project_id := $.Site.Params.workflow.project_id }}
+{{ $environments := $.Site.Params.workflow.environments | default dict }}
+-->
+<script>
+  // Set the selected branch or ref
+  function selectRef(branch) {
+    const url = new URL(window.location);
+    url.searchParams.set("branch", branch);
+    if (history.pushState) {
+      window.history.pushState(null, "", url.toString());
+    } else {
+      window.location.href = url.toString();
+    }
+    return branch;
+  }
+
+  async function fetchRefs(project_id, $workflows) {
+    const config = $workflows.getConfig();
+    const token = config?.token;
+    if (!token) return null;
+
+    const req_url = `${config.apiURL}/api/v4/projects/${project_id}/repository/branches`;
+    const headers = { "PRIVATE-TOKEN": token };
+    const resp = await fetch(req_url, { headers })
+      .then((res) => $workflows.jsonResponse(res))
+      .catch((err) => console.error(err));
+
+    return resp.map((item) => item.name);
+  }
+
+  function filterValues(target, terms) {
+    const items = target.querySelectorAll("a");
+    const searchTerm = terms.toLowerCase();
+    items.forEach((item) => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+</script>
+<div
+  x-init="refs = await fetchRefs('{{ $project_id }}', $store.workflows)"
+  x-data="{
+    open: false,
+    known: {{ $environments | jsonify }},
+    refs: [],
+  }"
+>
+  <!-- Branch icon -->
+  <i
+    class="fa-solid fa-diagram-project mr-1"
+    @click="open = !open; open && $nextTick(() => { document.querySelector('#branchfilter').focus(); });"
+  ></i>
+
+  <!-- Branch dropdown parent -->
+  <div class="relative group inline-block">
+    <!-- Current value -->
+    <button
+      type="button"
+      x-show="!open"      
+      class="inline-flex justify-center w-full"
+      @click="open = !open; open && $nextTick(() => { document.querySelector('#branchfilter').focus(); });"
+    >
+      <span x-show="!branch" class="text-gray-500 opacity-50 italic">
+        Select Environment
+      </span>
+
+      <span x-show="branch" x-text="branch" class="text-bold"></span>
+
+      {{ partial "icons/chevron-sm.svg" . }}
+    </button>
+
+    <!-- Search input -->
+    <input
+      id="branchfilter"
+      type="text"
+      autocomplete="off"
+      placeholder="Select Environment"
+      class="block w-40 px-2 py-1 -my-1 text-gray-800 border rounded-md border-gray-300 focus:outline-none"
+      x-on:input.debounce="filterValues(document.querySelector('#branch-dropdown'), $el.value)"
+      x-show="open"
+      style="display: none"
+    />
+
+    <!-- Dropdown content goes here -->
+    <div
+      id="branch-dropdown"
+      class="w-60 absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1"
+      x-init="other = refs.filter(item => !known[item])"
+      x-show="open"
+      style="display: none; z-index: 20;"
+      @click.outside="open = false"
+    >
+      <!-- Well known environments -->
+      <template x-for="item in Object.keys(known)">
+        <a
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md no-underline"
+          @click="branch = selectRef(item); open = false;"
+          x-text="known[item] || item"
+          x-bind:title="known[item] || item"
+          :class="{ 
+            'font-bold': item === branch,
+            'font-light': item !== branch,
+          }"
+        >
+        </a>
+      </template>
+      <hr x-show="other.length" />
+      <template x-for="item in refs.filter(item => !known[item])">
+        <a
+          @click="branch = selectRef(item); open = false;"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md truncate no-underline"
+          x-bind:title="known[item] || item"
+          x-text="item"
+          :class="{ 
+            'font-bold': item === branch,
+            'font-thin': item !== branch,
+          }"
+        >
+        </a>
+      </template>
+    </div>
+  </div>
+</div>
