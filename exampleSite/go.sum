@@ -48,6 +48,8 @@ github.com/gethugothemes/hugo-modules/videos v0.0.0-20240423040330-6260da698660 
 github.com/gethugothemes/hugo-modules/videos v0.0.0-20240423040330-6260da698660/go.mod h1:P722lLWdnNhdZVq6gvMrOLqECUwrAYQWaOWlChta5H0=
 github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21300.20800 h1:I2GanY0QJglzHgnPIB3IK1uUcSNQjPyc30l6Qz7Ajwo=
 github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21300.20800/go.mod h1:WWQxcmPs5Xy3xDgi29ipkmZT6NKVb3bsqyCDTY3eYYY=
+github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240428145643-27fb14202baa h1:FNcUtoOV9jxAtgjiLit8JHJGfv2jV0qlIxyz4jz5nfA=
+github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240428145643-27fb14202baa/go.mod h1:2u2s7Z+ssX7TOcSCpbARslgsOwYv+aZiQ5/PBgtckOw=
 github.com/zeon-studio/hugoplate v0.0.0-20240422031018-f1a3ce07e1d2 h1:rt5KYcy0Saup8+/HBQDrm8mFCGf1yo+tzLKTGAEEU58=
 github.com/zeon-studio/hugoplate v0.0.0-20240422031018-f1a3ce07e1d2/go.mod h1:YlRIwdTWidquf1dhtx+mDfu0I3KVrVQB4wi4UmHlK3E=
 github.com/zeon-studio/hugoplate v0.0.0-20240428031538-9036d85e19ab h1:JlzRm0v806aQEVbY1rMjaIGcPlATHB8R2puNpGq4O7Q=

@@ -1,4 +1,4 @@
-name: my-custom-pipelines
+name: gitlab-pages-workflows
 license: MIT
 licenselink: https://gitlab.com/JohnnyBeProgramming/my-custom-pipelines/blob/master/LICENSE.md
 description: A fast, minimalist and responsive hugo theme.

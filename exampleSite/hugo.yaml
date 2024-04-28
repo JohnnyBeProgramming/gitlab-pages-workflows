@@ -1,7 +1,9 @@
 title: Example Workflows
 baseURL: /
-theme: github.com/johnnybeprogramming/gitlab-pages-workflows
-#theme: github.com/zeon-studio/hugoplate
+#theme: github.com/johnnybeprogramming/gitlab-pages-workflows
+theme: gitlab-pages-workflows
+themesDir: ../../
+layoutDir: ../layouts/
 
 params:  
   favicon: images/favicon.png

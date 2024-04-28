@@ -1,6 +1,7 @@
 baseURL: /
 title: My Custom Pipelines
 theme: github.com/zeon-studio/hugoplate
+
 params:
   workflow:
     project_id: '56547146'
