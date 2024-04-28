@@ -1,5 +1,5 @@
 # Link to local (parent) theme dir in development mode
 #theme: gitlab.com/JohnnyBeProgramming/my-custom-pipelines
-theme: my-custom-pipelines
-themesDir: ../../
-layoutDir: ./../layouts/
+#theme: my-custom-pipelines
+#themesDir: ../../
+#layoutDir: ./../layouts/

@@ -1,6 +1,6 @@
 title: Example Workflows
 baseURL: /
-theme: gitlab.com/JohnnyBeProgramming/my-custom-pipelines
+theme: github.com/johnnybeprogramming/gitlab-pages-workflows
 #theme: github.com/zeon-studio/hugoplate
 
 params:  

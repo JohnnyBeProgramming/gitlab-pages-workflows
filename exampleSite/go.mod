@@ -26,6 +26,6 @@ require (
 	github.com/gethugothemes/hugo-modules/tab v0.0.0-20240423040330-6260da698660 // indirect
 	github.com/gethugothemes/hugo-modules/table-of-contents v0.0.0-20240423040330-6260da698660 // indirect
 	github.com/gethugothemes/hugo-modules/videos v0.0.0-20240423040330-6260da698660 // indirect
-	github.com/zeon-studio/hugoplate v0.0.0-20240422031018-f1a3ce07e1d2 // indirect
-	gitlab.com/JohnnyBeProgramming/my-custom-pipelines v0.0.0-20240417095419-fd56e2c78857 // indirect
+	github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21300.20800 // indirect
+	github.com/zeon-studio/hugoplate v0.0.0-20240428031538-9036d85e19ab // indirect
 )

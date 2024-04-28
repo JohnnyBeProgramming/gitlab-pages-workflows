@@ -1,4 +1,4 @@
-module github.com/JohnnyBeProgramming/gitlab-pages-workflows
+module github.com/johnnybeprogramming/gitlab-pages-workflows
 
 go 1.20
 
