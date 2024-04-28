@@ -1,4 +1,15 @@
 {
+  "name": "gitlab-pages-workflows",
+  "description": "hugo tailwindcss boilerplate",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "hugo server",
+    "build": "hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic",
+    "preview": "hugo server --disableFastRender --navigateToChanged --templateMetrics --templateMetricsHints --watch --forceSyncStatic -e production --minify",
+    "dev:example": "cd exampleSite; hugo server",
+    "build:example": "cd exampleSite; hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic"
+  },
   "dependencies": {
     "@jsonforms/core": "3.2.1",
     "@jsonforms/material-renderers": "^3.2.1",
