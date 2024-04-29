@@ -1,5 +1,3 @@
-github.com/JohnnyBeProgramming/gitlab-pages-workflows v0.0.0-20240428144720-f46111eb5fce h1:vGcmYrFcPI5CXpMfgKDFTn5OS7SoY37Ag+X6AhYqwMo=
-github.com/JohnnyBeProgramming/gitlab-pages-workflows v0.0.0-20240428144720-f46111eb5fce/go.mod h1:BCD9brHFY3OxlS2qdZjPDZ4OmwTVp80WCUkAk3lbU+I=
 github.com/gethugothemes/hugo-modules/accordion v0.0.0-20240423040330-6260da698660 h1:WnBXOsbUiwOdOdtyGrvvH6KKRnDUHNoz3WnzkFEZ9f8=
 github.com/gethugothemes/hugo-modules/accordion v0.0.0-20240423040330-6260da698660/go.mod h1:D4DpauKPDcUHI9CVKYmJeO6bkSJIhUN864TyXZ2o0VI=
 github.com/gethugothemes/hugo-modules/adsense v0.0.0-20240423040330-6260da698660 h1:IFPnlwJDz44yNTrr7UZLBcIh0tz5Gd4iUmjO0aTbQjA=
@@ -48,11 +46,7 @@ github.com/gethugothemes/hugo-modules/videos v0.0.0-20240423040330-6260da698660 
 github.com/gethugothemes/hugo-modules/videos v0.0.0-20240423040330-6260da698660/go.mod h1:P722lLWdnNhdZVq6gvMrOLqECUwrAYQWaOWlChta5H0=
 github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21300.20800 h1:I2GanY0QJglzHgnPIB3IK1uUcSNQjPyc30l6Qz7Ajwo=
 github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21300.20800/go.mod h1:WWQxcmPs5Xy3xDgi29ipkmZT6NKVb3bsqyCDTY3eYYY=
-github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240428145643-27fb14202baa h1:FNcUtoOV9jxAtgjiLit8JHJGfv2jV0qlIxyz4jz5nfA=
-github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240428145643-27fb14202baa/go.mod h1:2u2s7Z+ssX7TOcSCpbARslgsOwYv+aZiQ5/PBgtckOw=
-github.com/zeon-studio/hugoplate v0.0.0-20240422031018-f1a3ce07e1d2 h1:rt5KYcy0Saup8+/HBQDrm8mFCGf1yo+tzLKTGAEEU58=
-github.com/zeon-studio/hugoplate v0.0.0-20240422031018-f1a3ce07e1d2/go.mod h1:YlRIwdTWidquf1dhtx+mDfu0I3KVrVQB4wi4UmHlK3E=
+github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240429055101-5252033cbac3 h1:O6r9GyUN0fXaeanY4EOznF1/gekl928k/UY0u8JRcFU=
+github.com/johnnybeprogramming/gitlab-pages-workflows v0.0.0-20240429055101-5252033cbac3/go.mod h1:/jmkfN7Ad0uYBt6tfaofXk0xB/7COdPvhr3Z6ktQ4n4=
 github.com/zeon-studio/hugoplate v0.0.0-20240428031538-9036d85e19ab h1:JlzRm0v806aQEVbY1rMjaIGcPlATHB8R2puNpGq4O7Q=
 github.com/zeon-studio/hugoplate v0.0.0-20240428031538-9036d85e19ab/go.mod h1:YlRIwdTWidquf1dhtx+mDfu0I3KVrVQB4wi4UmHlK3E=
-gitlab.com/JohnnyBeProgramming/my-custom-pipelines v0.0.0-20240417095419-fd56e2c78857 h1:7TruWQeNob0y3A2JGBke4ayonbfU+StxgyRRll1PdDw=
-gitlab.com/JohnnyBeProgramming/my-custom-pipelines v0.0.0-20240417095419-fd56e2c78857/go.mod h1:b7knXF4+PDiBFcHzL4odqQloaaAAEkzTY4TcUd29dkI=

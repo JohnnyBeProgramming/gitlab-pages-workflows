@@ -1,8 +1,8 @@
 title: Example Workflows
 baseURL: /
-#theme: github.com/johnnybeprogramming/gitlab-pages-workflows
-theme: gitlab-pages-workflows
-themesDir: ../../
+theme: github.com/johnnybeprogramming/gitlab-pages-workflows
+#theme: gitlab-pages-workflows
+#themesDir: ../../
 layoutDir: ../layouts/
 
 params:  

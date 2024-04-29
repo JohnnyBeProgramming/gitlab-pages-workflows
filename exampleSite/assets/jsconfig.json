@@ -4,7 +4,7 @@
   "paths": {
    "*": [
     "../../../../../Library/Caches/hugo_cache/modules/filecache/modules/pkg/mod/github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3@v3.21300.20800/packages/*",
-    "../../assets/*"
+    "../../../../../Library/Caches/hugo_cache/modules/filecache/modules/pkg/mod/github.com/johnnybeprogramming/gitlab-pages-workflows@v0.0.0-20240429055101-5252033cbac3/assets/*"
    ]
   }
  }
